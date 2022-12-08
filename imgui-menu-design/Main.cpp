@@ -7,9 +7,7 @@
 #include <tchar.h>
 
 
-#pragma comment (lib, "d3d9.lib")
-#include <d3d9.h>
-#include <d3dx9.h>
+
 
 #include "menu/Menu.h"
  
@@ -45,7 +43,7 @@ int WINAPI WinMain(
 {
     WNDCLASSEXW wc = { sizeof(wc), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, L"ImGui Example", NULL };
     ::RegisterClassExW(&wc);
-    HWND hwnd = ::CreateWindowW(wc.lpszClassName, L"Dear ImGui DirectX9 Example", WS_OVERLAPPEDWINDOW, 100, 100, 1280, 800, NULL, NULL, wc.hInstance, NULL);
+    HWND hwnd = ::CreateWindowW(wc.lpszClassName, L"Dear ImGui DirectX9 Example", WS_OVERLAPPEDWINDOW, 1920 / 2 - (1280 / 2), 1080 / 2 - (800 / 2), 1280, 800, NULL, NULL, wc.hInstance, NULL);
 
     // Initialize Direct3D
     if (!CreateDeviceD3D(hwnd))
@@ -122,7 +120,7 @@ int WINAPI WinMain(
         ImGui::NewFrame();
 
         
-        Menu::runCustomGui(false);
+        Menu::runCustomGui(g_pd3dDevice, false);
 
         if (GetAsyncKeyState(VK_XBUTTON2) & 1)
             Menu::settings::isOpened = !Menu::settings::isOpened;
