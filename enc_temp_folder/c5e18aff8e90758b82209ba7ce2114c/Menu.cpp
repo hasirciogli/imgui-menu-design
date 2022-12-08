@@ -199,7 +199,7 @@ void Menu::runCustomGui(LPDIRECT3DDEVICE9 pDevice, bool param) {
 
 				getMenuPos(mPos);
 
-				ImGui::GetWindowDrawList()->AddCircleFilled(ImVec2(mPos.x + calculateUiScalar((220 / 3) / 2), mPos.y + calculateUiScalar(65 / 2)), 20, ImColor(140, 140, 140));
+				ImGui::GetWindowDrawList()->AddCircleFilled(ImVec2(mPos.x + calculateUiScalar((220 / 3) / 2), mPos.y + calculateUiScalar(65 / 2)), 23, ImColor(140, 140, 140));
 				imspaceMacro(calculateUiScalar((220 / 3 + 10)), calculateUiScalar(65 / 2) - (ImGui::CalcTextSize("Hasirciogli", nullptr).y / 2));
 				ImGui::Text("Hasirciogli");
 			}

@@ -3,7 +3,7 @@
 
 #include <windows.h>
 #include <stdlib.h>
-#include <string.h>
+#include <string>
 #include <tchar.h>
 
 
@@ -66,6 +66,9 @@ int WINAPI WinMain(
 
     // Setup Dear ImGui style
     ImGui::StyleColorsDark();
+    io.FontDefault = io.Fonts->AddFontFromFileTTF("C:/Windows/Fonts/Verdana.ttf", 18);
+
+    Menu::settings::fonts_GUIBIGFONT = io.Fonts->AddFontFromFileTTF("C:/Windows/Fonts/Verdana.ttf", 150);
     //ImGui::StyleColorsLight();
 
     // Setup Platform/Renderer backends
