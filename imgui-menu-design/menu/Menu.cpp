@@ -193,7 +193,7 @@ void Menu::runCustomGui(LPDIRECT3DDEVICE9 pDevice, bool param) {
 			}
 			ImGui::EndChild();
 
-			ImGui::BeginChild("#left-bottomer", ImVec2(calculateUiScalar(220), calculateUiScalar(65)), false);
+			ImGui::BeginChild("#left-bottomer", ImVec2(calculateUiScalar(220), calculateUiScalar(65)), false); 
 			{
 				ImVec2 mPos = {};
 
