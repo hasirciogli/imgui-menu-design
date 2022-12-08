@@ -117,7 +117,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     TCHAR greeting[] = _T("Hello, Windows desktop!");
 
     switch (message)
-    {
+    { 
     case WM_PAINT:
         hdc = BeginPaint(hWnd, &ps);
 
