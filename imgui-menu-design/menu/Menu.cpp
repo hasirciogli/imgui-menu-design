@@ -69,6 +69,19 @@ void customComboBox(int& selectedItemID, const char* items[10]) {
 	}
 }
 
+
+
+void renderAimbotPage() {
+	imspaceMacro(12, 0);
+	ImGui::BeginChild("#AimBotMenu", ImVec2(calculateUiScalar(Menu::settings::ui_width_s - 235 - 8), calculateUiScalar(Menu::settings::ui_height_s - 10)), false);
+	{
+		ImGui::Text("There Is Aimbot");
+	}
+	ImGui::EndChild();
+}
+
+
+
 void Menu::runCustomGui(LPDIRECT3DDEVICE9 pDevice, bool param) {
 	if (!Menu::settings::isOpened)
 		return;
@@ -134,7 +147,7 @@ void Menu::runCustomGui(LPDIRECT3DDEVICE9 pDevice, bool param) {
 		ImGui::GetWindowDrawList()->AddLine(ImVec2(nPos.x + calculateUiScalar(230), nPos.y + nPos2.y), ImVec2(nPos.x + calculateUiScalar(230), nPos.y + calculateUiScalar(Menu::settings::ui_height_s - 5)), ImColor(150, 150, 150), 2);
 
 		
-		ImGui::BeginChild("#left-side", ImVec2(calculateUiScalar(220), calculateUiScalar(Menu::settings::ui_height_s - 10)), true);
+		ImGui::BeginChild("#left-side", ImVec2(calculateUiScalar(220), calculateUiScalar(Menu::settings::ui_height_s - 10)), false);
 		{
 
 			ImGui::BeginChild("#left-upper", ImVec2(calculateUiScalar(220), calculateUiScalar(Menu::settings::ui_height_s - 75)), false);
@@ -162,8 +175,7 @@ void Menu::runCustomGui(LPDIRECT3DDEVICE9 pDevice, bool param) {
 						Menu::settings::selected_page = page_id;
 				};
 
-				selButItem("Ragebot", 0, false);
-				selButItem("Legitbot", 1);
+				selButItem("Aim Bot", 0, false);
 				selButItem("Anti Aim", 2);
 				 
 
@@ -187,7 +199,7 @@ void Menu::runCustomGui(LPDIRECT3DDEVICE9 pDevice, bool param) {
 
 				selButItem("Misc", 6);
 				selButItem("Skins", 7);
-				selButItem("Script", 8);
+				selButItem("Script", 0);
 
 				ImGui::GetStyle().FrameRounding = 2;
 			}
@@ -207,9 +219,19 @@ void Menu::runCustomGui(LPDIRECT3DDEVICE9 pDevice, bool param) {
 		}
 		ImGui::EndChild();
 
+		ImGui::SameLine();
+
 		ImGui::BeginChild("#right-side");
 		{
-			
+			switch (Menu::settings::selected_page)
+			{
+			case 0:
+				renderAimbotPage();
+				break;
+			default:
+				break;
+			}
+
 		}
 		ImGui::EndChild();
 	}
