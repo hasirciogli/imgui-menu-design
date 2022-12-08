@@ -367,3 +367,4 @@ FodyWeavers.xsd
 .Intermediate/
 /Intermediate/vc143.idb
 /imgui-menu-design/output/application.exe
+/Intermediate/menu.obj.enc
