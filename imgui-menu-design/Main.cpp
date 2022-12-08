@@ -6,6 +6,11 @@
 #include <string.h>
 #include <tchar.h>
 
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_dx9.h"
+#include "imgui/imgui_impl_win32.h"
+#include <d3d9.h>
+
 // Global variables
 
 // The main window class name.
@@ -37,7 +42,7 @@ int WINAPI WinMain(
     wcex.hInstance = hInstance;
     wcex.hIcon = LoadIcon(wcex.hInstance, IDI_APPLICATION);
     wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
-    wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+    wcex.hbrBackground = CreateSolidBrush(RGB(50, 50, 50));
     wcex.lpszMenuName = NULL;
     wcex.lpszClassName = szWindowClass;
     wcex.hIconSm = LoadIcon(wcex.hInstance, IDI_APPLICATION);
@@ -50,7 +55,7 @@ int WINAPI WinMain(
             NULL);
 
         return 1;
-    }
+    } 
 
     // Store instance handle in our global variable
     hInst = hInstance;
@@ -70,14 +75,16 @@ int WINAPI WinMain(
         WS_EX_OVERLAPPEDWINDOW,
         szWindowClass,
         szTitle,
-        WS_OVERLAPPEDWINDOW,
+        0,
         CW_USEDEFAULT, CW_USEDEFAULT,
-        500, 100,
+        1300, 750,
         NULL,
         NULL,
         hInstance,
         NULL
     );
+
+    SetWindowLongPtr(hWnd, GWL_STYLE, 0);
 
     if (!hWnd)
     {
@@ -120,14 +127,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     { 
     case WM_PAINT:
         hdc = BeginPaint(hWnd, &ps);
-
-        // Here your application is laid out.
-        // For this introduction, we just print out "Hello, Windows desktop!"
-        // in the top left corner.
-        TextOut(hdc,
-            5, 5,
-            greeting, _tcslen(greeting));
-        // End application-specific layout section.
 
         EndPaint(hWnd, &ps);
         break;
