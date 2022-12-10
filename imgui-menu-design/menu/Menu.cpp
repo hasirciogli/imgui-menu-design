@@ -72,10 +72,136 @@ void customComboBox(int& selectedItemID, const char* items[10]) {
 
 
 void renderAimbotPage() {
-	imspaceMacro(12, 0);
-	ImGui::BeginChild("#AimBotMenu", ImVec2(calculateUiScalar(Menu::settings::ui_width_s - 235 - 8), calculateUiScalar(Menu::settings::ui_height_s - 10)), false);
+	ImVec2 cMenuSize = ImVec2(calculateUiScalar(Menu::settings::ui_width_s - 235 - 8), calculateUiScalar(Menu::settings::ui_height_s - 60));
+
+	ImGui::BeginChild("#AimBotMenu", cMenuSize, false);
 	{
-		ImGui::Text("There Is Aimbot");
+		ImGui::BeginChild("#state-left", ImVec2(cMenuSize.x / 2, cMenuSize.y), true); {
+			imspaceMacro(10, 10);
+			ImGui::Checkbox("Enabled", &Menu::settings::Aimbot::enabled);
+			imspaceMacro(10, 10);
+			ImGui::Checkbox("Team Check", &Menu::settings::Aimbot::teamCheck);
+			imspaceMacro(10, 10);
+			ImGui::Checkbox("Auto Fire", &Menu::settings::Aimbot::autofire);
+			imspaceMacro(10, 10);
+			ImGui::Checkbox("Auto Revolver", &Menu::settings::Aimbot::auto_revolver);
+			imspaceMacro(10, 10);
+			ImGui::Checkbox("Auto Wall", &Menu::settings::Aimbot::auto_wall);
+			imspaceMacro(10, 10);
+			ImGui::PushItemWidth(cMenuSize.x / 2 - (ImGui::CalcTextSize("Min Damage").x + 30));
+			ImGui::SliderFloat("Min Damage", &Menu::settings::Aimbot::min_damage, 0, 120.f, "%.0f");
+			imspaceMacro(10, 10);
+			ImGui::SliderFloat("Aimbot Fov", &Menu::settings::Aimbot::aimbot_fov, 0, 180.f, "%.1f");
+			ImGui::PopItemWidth();
+
+
+		}
+		ImGui::EndChild();
+
+		ImGui::SameLine();
+
+		ImGui::BeginChild("#state-right", ImVec2(cMenuSize.x / 2, cMenuSize.y), true); {
+
+		}
+		ImGui::EndChild();
+	}
+	ImGui::EndChild();
+}
+
+void renderAntiAimPage() {
+	ImVec2 cMenuSize = ImVec2(calculateUiScalar(Menu::settings::ui_width_s - 235 - 8), calculateUiScalar(Menu::settings::ui_height_s - 60));
+
+	ImGui::BeginChild("#AntiAimMenu", cMenuSize, false);
+	{
+		ImGui::BeginChild("#state-left", ImVec2(cMenuSize.x / 2, cMenuSize.y), true); {
+			/*imspaceMacro(10, 10);
+			ImGui::Checkbox("Enabled", &Menu::settings::Aimbot::enabled);
+			imspaceMacro(10, 10);
+			ImGui::Checkbox("Team Check", &Menu::settings::Aimbot::teamCheck);
+			imspaceMacro(10, 10);
+			ImGui::Checkbox("Auto Fire", &Menu::settings::Aimbot::autofire);
+			imspaceMacro(10, 10);
+			ImGui::Checkbox("Auto Revolver", &Menu::settings::Aimbot::auto_revolver);
+			imspaceMacro(10, 10);
+			ImGui::Checkbox("Auto Wall", &Menu::settings::Aimbot::auto_wall);
+			imspaceMacro(10, 10);
+			ImGui::PushItemWidth(cMenuSize.x / 2 - (ImGui::CalcTextSize("Min Damage").x + 30));
+			ImGui::SliderFloat("Min Damage", &Menu::settings::Aimbot::min_damage, 0, 120.f, "%.0f");
+			imspaceMacro(10, 10);
+			ImGui::SliderFloat("Aimbot Fov", &Menu::settings::Aimbot::aimbot_fov, 0, 180.f, "%.1f");
+			ImGui::PopItemWidth();*/
+
+
+		}
+		ImGui::EndChild();
+
+		ImGui::SameLine();
+
+		ImGui::BeginChild("#state-right", ImVec2(cMenuSize.x / 2, cMenuSize.y), true); {
+
+		}
+		ImGui::EndChild();
+	}
+	ImGui::EndChild();
+}
+
+void renderEspPage() {
+	ImVec2 cMenuSize = ImVec2(calculateUiScalar(Menu::settings::ui_width_s - 235 - 8), calculateUiScalar(Menu::settings::ui_height_s - 60));
+	ImGuiStyle& imguiStyles2 = ImGui::GetStyle();
+	ImGui::BeginChild("#EspMenu", cMenuSize, false);
+	{
+		ImGui::BeginChild("#esp-state-left", ImVec2(cMenuSize.x / 2, cMenuSize.y), true); {
+			if(Menu::settings::Esp::selected_team == 0)
+				imguiStyles2.Colors[ImGuiCol_Button] = ImColor(35, 90, 30);
+
+
+
+
+			imspaceMacro(10, 10);
+			if (ImGui::Button("Local", ImVec2((cMenuSize.x / 2) / 3 - 13.3, 30)))
+				Menu::settings::Esp::selected_team = 0;
+			ImGui::SameLine();
+			imguiStyles2.Colors[ImGuiCol_Button] = ImColor(40, 40, 40);
+
+			if (Menu::settings::Esp::selected_team == 1)
+				imguiStyles2.Colors[ImGuiCol_Button] = ImColor(35, 90, 30);
+			imspaceMacro(10, 0);
+			if (ImGui::Button("Enemy", ImVec2((cMenuSize.x / 2) / 3 - 13.3, 30)))
+				Menu::settings::Esp::selected_team = 1;
+			ImGui::SameLine();
+			imguiStyles2.Colors[ImGuiCol_Button] = ImColor(40, 40, 40);
+
+			if (Menu::settings::Esp::selected_team == 2)
+				imguiStyles2.Colors[ImGuiCol_Button] = ImColor(35, 90, 30);
+
+			imspaceMacro(10, 0);
+			if (ImGui::Button("Team", ImVec2((cMenuSize.x / 2) / 3 - 13.3, 30)))
+				Menu::settings::Esp::selected_team = 2;
+			imguiStyles2.Colors[ImGuiCol_Button] = ImColor(40, 40, 40);
+
+
+			imspaceMacro(10, 10);
+			ImGui::Checkbox("Enabled Base", &Menu::settings::Esp::enabledBase[Menu::settings::Esp::selected_team]);
+			imspaceMacro(10, 10);
+			ImGui::Checkbox("Enabled Box", &Menu::settings::Esp::enabledBox[Menu::settings::Esp::selected_team]);
+			imspaceMacro(10, 10);
+			ImGui::Checkbox("Enabled Line", &Menu::settings::Esp::enabledLine[Menu::settings::Esp::selected_team]);
+			imspaceMacro(10, 10);
+			ImGui::Checkbox("Enabled Gethers", &Menu::settings::Esp::enabledGethers[Menu::settings::Esp::selected_team]);
+
+
+
+
+
+		}
+		ImGui::EndChild();
+
+		ImGui::SameLine();
+
+		ImGui::BeginChild("#esp-state-right", ImVec2(cMenuSize.x / 2, cMenuSize.y), true); {
+
+		}
+		ImGui::EndChild();
 	}
 	ImGui::EndChild();
 }
@@ -114,7 +240,7 @@ void Menu::runCustomGui(LPDIRECT3DDEVICE9 pDevice, bool param) {
 		imguiStyles.FramePadding = ImVec2(0, 0);
 		imguiStyles.CellPadding = ImVec2(0, 0);
 		imguiStyles.ItemSpacing = ImVec2(0, 0);
-		imguiStyles.ItemInnerSpacing = ImVec2(0, 0);
+		imguiStyles.ItemInnerSpacing = ImVec2(10, 0);
 
 		imguiStyles.Colors[ImGuiCol_WindowBg] = ImColor(20, 20, 20);
 
@@ -162,11 +288,23 @@ void Menu::runCustomGui(LPDIRECT3DDEVICE9 pDevice, bool param) {
 
 
 
-				ImGui::GetStyle().FrameRounding = 0;
+				ImGui::GetStyle().FrameRounding = 3;
 
 				imguiStyles.Colors[ImGuiCol_Button] = ImColor(20, 20, 20);
 				imguiStyles.Colors[ImGuiCol_ButtonHovered] = ImColor(35, 120, 30);
 				imguiStyles.Colors[ImGuiCol_ButtonActive] = ImColor(35, 90, 30);
+
+
+				imguiStyles.Colors[ImGuiCol_CheckMark] = ImColor(30, 220, 30);
+
+				imguiStyles.Colors[ImGuiCol_FrameBg] = ImColor(40, 40, 40);
+				imguiStyles.Colors[ImGuiCol_FrameBgHovered] = ImColor(50, 50, 50);
+				imguiStyles.Colors[ImGuiCol_FrameBgActive] = ImColor(50, 110, 50);
+
+
+				imguiStyles.Colors[ImGuiCol_SliderGrab] = ImColor(30, 220, 30);
+				imguiStyles.Colors[ImGuiCol_SliderGrabActive] = ImColor(30, 220, 30);
+
 
 
 				auto selButItem = [](std::string item_name, int page_id, bool isFirst = false) {
@@ -176,7 +314,7 @@ void Menu::runCustomGui(LPDIRECT3DDEVICE9 pDevice, bool param) {
 				};
 
 				selButItem("Aim Bot", 0, false);
-				selButItem("Anti Aim", 2);
+				selButItem("Anti Aim", 1);
 				 
 
 				ImVec2 nPos = {};
@@ -188,31 +326,32 @@ void Menu::runCustomGui(LPDIRECT3DDEVICE9 pDevice, bool param) {
 				ImGui::GetWindowDrawList()->AddLine(ImVec2(nPos.x + calculateUiScalar(40), nPos.y + nPos2.y + 9), ImVec2(nPos.x + calculateUiScalar(220 - 40), nPos.y + nPos2.y + 9), ImColor(150, 150, 150), 2);
 				imspaceMacro(0, 20);
 
-				selButItem("Esp", 3);
-				selButItem("Chams", 4);
-				selButItem("World", 5);
+				selButItem("Esp", 2);
+				selButItem("Chams", 3);
+				selButItem("World", 4);
 
 				getMenuPos(nPos);
 				getCursorPos(nPos2);
 				ImGui::GetWindowDrawList()->AddLine(ImVec2(nPos.x + calculateUiScalar(40), nPos.y + nPos2.y + 9), ImVec2(nPos.x + calculateUiScalar(220 - 40), nPos.y + nPos2.y + 9), ImColor(150, 150, 150), 2);
 				imspaceMacro(0, 20);
 
-				selButItem("Misc", 6);
-				selButItem("Skins", 7);
-				selButItem("Script", 0);
+				selButItem("Misc", 5);
+				selButItem("Skins", 6);
+				selButItem("Scripts", 7);
+				selButItem("Settings", 8);
 
 				ImGui::GetStyle().FrameRounding = 2;
 			}
 			ImGui::EndChild();
 
-			ImGui::BeginChild("#left-bottomer", ImVec2(calculateUiScalar(220), calculateUiScalar(65)), false); 
+			ImGui::BeginChild("#left-bottomer", ImVec2(calculateUiScalar(220), calculateUiScalar(65)), false);
 			{
 				ImVec2 mPos = {};
 
 				getMenuPos(mPos); 
 
 				ImGui::GetWindowDrawList()->AddCircleFilled(ImVec2(mPos.x + calculateUiScalar((220 / 3) / 2), mPos.y + calculateUiScalar(65 / 2)), 20, ImColor(140, 140, 140));
-				imspaceMacro(calculateUiScalar((220 / 3 + 10)), calculateUiScalar(65 / 2) - (ImGui::CalcTextSize("Hasirciogli", nullptr).y / 2));
+				imspaceMacro(calculateUiScalar((220 / 3) - 10), calculateUiScalar(65 / 2) - (ImGui::CalcTextSize("Hasirciogli", nullptr).y / 2));
 				ImGui::Text("Hasirciogli");
 			}
 			ImGui::EndChild();
@@ -221,12 +360,28 @@ void Menu::runCustomGui(LPDIRECT3DDEVICE9 pDevice, bool param) {
 
 		ImGui::SameLine();
 
-		ImGui::BeginChild("#right-side");
+		ImVec2 cMenuSize = ImVec2(calculateUiScalar(Menu::settings::ui_width_s - 235 - 8), calculateUiScalar(Menu::settings::ui_height_s - 10));
+		imspaceMacro(12, 0);
+		ImGui::BeginChild("#right-side", cMenuSize);
 		{
+			
+			imguiStyles.Colors[ImGuiCol_Button] = ImColor(40, 40, 40);
+
+			ImGui::BeginChild("#state-upper", ImVec2(cMenuSize.x, 50), true); {
+
+			}
+			ImGui::EndChild();
+
 			switch (Menu::settings::selected_page)
 			{
 			case 0:
 				renderAimbotPage();
+				break;
+			case 1:
+				renderAntiAimPage();
+				break;
+			case 2:
+				renderEspPage();
 				break;
 			default:
 				break;
@@ -249,7 +404,7 @@ void Menu::runCustomGui(LPDIRECT3DDEVICE9 pDevice, bool param) {
 
 	}
 	ImGui::End();
-
+	
 	Menu::settings::updateMenuScalar(Menu::settings::uiSelectedScalarID);
 
 }

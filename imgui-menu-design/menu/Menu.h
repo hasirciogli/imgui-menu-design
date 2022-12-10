@@ -66,6 +66,40 @@ namespace Menu
 				break;
 			}
 		}
+
+
+		namespace Aimbot {
+			inline bool enabled = false;
+			inline bool teamCheck = false;
+			inline bool autofire = false;
+			inline bool auto_revolver = false;
+			inline bool auto_wall = false;
+
+			inline float min_damage = 0.f;
+			inline float aimbot_fov = 0.f;
+			
+			namespace hitboxes {
+				inline bool head = false;
+
+			}
+		}
+
+		namespace Esp {
+			inline int espTeamState = 0;
+			inline int selected_team = 0;
+			inline bool test = false;
+
+			inline bool enabledBase[] = { false, false, false };
+			inline bool enabledEsp[] = {false, false, false};
+			inline bool enabledBox[] = {false, false, false};
+			inline bool enabledLine[] = {false, false, false};
+			inline bool enabledGethers[] = {false, false, false};
+		}
+
+
+
+
+
 	};
 	void runCustomGui(LPDIRECT3DDEVICE9, bool paramval = 0);
 	void runCustomGui2(bool paramval = 0);
